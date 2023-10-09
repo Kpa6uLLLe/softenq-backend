@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
   res.send('Successful response.');
 });
 
-app.get('/api/fr', (req, res) => {
+app.get('/fr', (req, res) => {
     res.send('back and front are friends now');
   });
   
