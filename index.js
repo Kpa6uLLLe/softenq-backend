@@ -5,6 +5,7 @@ const { sequelize } = require('./models');
   await sequelize.sync({ force: false })
 })();
 const app = express();
+app.use(express.json());
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
@@ -20,4 +21,7 @@ app.get('/fr', (req, res) => {
   });
   
   
+require('./routes/auth.routes')(app);
+require('./routes/user.routes')(app);
+
 app.listen(3000, () => console.log('Example app is listening on port 3000.'));
