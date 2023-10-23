@@ -2,7 +2,35 @@ const db = require("../models");
 const ROLES = db.ROLES;
 const User = db.user;
 
+validateCredentials = (req, res, next) => {
+  reUsername = "^[a-zA-Z][a-zA-Z0-9-_\\.]{3,64}$";
+  reEmail = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+  rePassword = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+  if (!req.body.username.match(reUsername)){
+    res.status(400).send({
+      message: "Failed! Invalid username"
+    });
+    return;
+  }
+  if (!req.body.email.match(reEmail)){
+    res.status(400).send({
+      message: "Failed! Invalid email"
+    });
+    return;
+  }
+  if (!req.body.password.match(rePassword)){
+    res.status(400).send({
+      message: "Failed! Invalid password"
+    });
+    return;
+  }
+  next();
+};
+
 checkDuplicateUsernameOrEmail = (req, res, next) => {
+
+
+
   // Username
   User.findOne({
     where: {
@@ -50,6 +78,7 @@ checkRolesExisted = (req, res, next) => {
 };
 
 const verifySignUp = {
+  validateCredentials: validateCredentials,
   checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
   checkRolesExisted: checkRolesExisted
 };
