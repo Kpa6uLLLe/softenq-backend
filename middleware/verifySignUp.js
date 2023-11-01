@@ -5,7 +5,7 @@ const User = db.user;
 validateCredentials = (req, res, next) => {
   reUsername = "^[a-zA-Z][a-zA-Z0-9-_\\.]{3,64}$";
   reEmail = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
-  rePassword = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+  rePassword = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
   if (!req.body.username.match(reUsername)){
     res.status(400).send({
       message: "Failed! Invalid username"
